@@ -9,11 +9,11 @@ describe Slacked do
 
   context 'post' do
     it 'returns false when message is blank' do
-      expect(Slacked.post('')).to be_falsey
+      expect(Slacked.post(message: '')).to be_falsey
     end
 
     it 'returns false when message is nil' do
-      expect(Slacked.post(nil)).to be_falsey
+      expect(Slacked.post(message: nil)).to be_falsey
     end
 
     it 'uses the env variable SLACK_DEFAULT_MESSAGE if no message is passed' do
@@ -27,7 +27,16 @@ describe Slacked do
           icon_emoji: ':ghost:'
       }
       expect_any_instance_of(Slack::Notifier).to receive(:ping).with(message, config).and_return(true)
-      expect(Slacked.post(message, config)).to be_truthy
+      expect(Slacked.post(
+        message: message,
+        config:  config
+      )).to be_truthy
+    end
+
+    it 'uses the env variable SLACK_WEBHOOK if no webhook_url is passed' do
+      expect_any_instance_of(Slack::Notifier).to receive(:ping).with(message, Slacked::SLACK_DEFAULT_CONFIG).and_return(true)
+      ENV[Slacked::SLACK_DEFAULT_MESSAGE_KEY] = message
+      expect(Slacked.post(webhook_url: 'slack.myotherwebhook.com')).to be_truthy
     end
   end
 
@@ -38,7 +47,7 @@ describe Slacked do
 
     context 'async' do
       it 'post method is called async' do
-        thread = Slacked.post_async(message)
+        thread = Slacked.post_async(message: message)
         expect(thread.value).to be_truthy
         expect(thread.class).to eql(Thread)
       end
@@ -46,7 +55,7 @@ describe Slacked do
 
     context 'sync' do
       it 'the ping method of Slack::Notifier is called' do
-        expect(Slacked.post(message)).to be_truthy
+        expect(Slacked.post(message: message)).to be_truthy
       end
     end
   end
