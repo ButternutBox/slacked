@@ -48,7 +48,7 @@ If you want to send a unique message in your application like 'Application is ru
 ### To send a sync message to slack use the method:
 
 ```ruby
-Slacked.post "This is a test post"
+Slacked.post(message: "This is a test post")
 ```
 
 or
@@ -61,7 +61,7 @@ The last example will use the SLACK_DEFAULT_MESSAGE value
 ### To send an async message to slack use the method:
 
 ```ruby
-Slacked.post_async "This is a test post"
+Slacked.post_async(message: "This is a test post")
 ```
 
 or
@@ -74,15 +74,38 @@ The last example will use the SLACK_DEFAULT_MESSAGE value
 ### To pass the config:
 
 ```ruby
-Slacked.post "I have a message from the underworld!", {icon_emoji: ':ghost:'}
+Slacked.post(
+	message: "I have a message from the underworld!",
+	config:  {icon_emoji: ':ghost:'}
+)
 ```
 
 or
 ```ruby
-Slacked.post_async "Let's play fetch!", {icon_emoji: ':dog:'}
+Slacked.post_async(
+	message: "Let's play fetch!",
+	config:  {icon_emoji: ':dog:'}
+)
 ```
 
 Right now we only have the config for the icon, if you need another one let us know or submit a pull request.
+
+## To dynamically set the webhook
+
+```ruby
+Slacked.post(
+	message:     "Let's play fetch!",
+	webhook_url: <WEBHOOK_URL>
+)
+```
+
+or
+```ruby
+Slacked.post_async(
+	message:     "Let's play fetch!",
+	webhook_url: <WEBHOOK_URL>
+)
+```
 
 ## Example
 
@@ -93,7 +116,7 @@ class Post < ActiveRecord::Base
   private
 
   def slacked
-    Slacked.post 'post created!'
+    Slacked.post(message: 'post created!')
   end
 end
 ```
