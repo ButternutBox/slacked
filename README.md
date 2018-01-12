@@ -107,12 +107,26 @@ config.slacked_disabled = true
 
 The default value is false
 
+## Testing
+
+First install all dependencies:
+
+```bash
+bundle install
+```
+
+Then run the tests to confirm that all are passing:
+
+```bash
+rspec ./spec/
+```
+
 ## Contributors
 
 - [Kaio Magalhães](https://github.com/kaiomagalhaes)
 - [Lockyy](https://github.com/Lockyy)
 - [Sean H.](https://github.com/seathony)
-
+- [Tomas Barry](https://github.com/TomasBarry)
 
 ## License
 
