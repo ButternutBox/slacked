@@ -5,11 +5,10 @@ gemspec
 
 gem 'rails'
 
-group :development do
-  gem 'listen'
-end
-
-group :test do
+group :test, :development do
   gem 'aruba', '~> 0.6.2'
   gem 'pry'
+  gem 'listen'
+  gem 'byebug'
+  gem 'pry-byebug'
 end
