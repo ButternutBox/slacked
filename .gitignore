@@ -11,3 +11,7 @@
 # Ignore application configuration
 /config/application.yml
 .idea*
+
+# Ignore byebug history
+.byebug_history
+
